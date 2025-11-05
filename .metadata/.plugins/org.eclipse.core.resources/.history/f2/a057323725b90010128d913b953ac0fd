@@ -1,0 +1,36 @@
+/*package com.ecodenuncia.config;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.web.SecurityFilterChain;
+
+@Configuration
+@EnableWebSecurity
+public class ClasseSeguranca {
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+            .authorizeHttpRequests(authorize -> authorize
+                // 1. Libera o endpoint /eco para todos (nosso teste)
+            		//listado na EcoDenunciaApplication.
+                .requestMatchers("/eco").permitAll() 
+                
+                // 2. liberado para o console do H2 (para vermos o banco)
+                .requestMatchers("/h2-console/**").permitAll() 
+                
+                // 3. Diz que QUALQUER OUTRA requisição precisa de autenticação
+                .anyRequest().authenticated() 
+            )
+            .formLogin(form -> form.loginPage("/login").permitAll()) // 4. Define a página de login padrão
+            .logout(logout -> logout.permitAll());
+
+        // Configurações específicas para o H2 (necessário para o console)
+        http.csrf(csrf -> csrf.disable());
+        http.headers(headers -> headers.frameOptions(frame -> frame.disable()));
+
+        return http.build();
+    }
+}

@@ -1,0 +1,14 @@
+package com.ecodenuncia.model;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+
+@Entity
+@Table (name = "tb_Denuncias")
+public class Denuncia {
+	
+	@Id
+	private Long Id;
+	
+
+}
